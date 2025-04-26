@@ -1,0 +1,8 @@
+profile undocked {
+  output "eDP-1" enable scale 1.2
+}
+
+profile home_office {
+  output "LG Electronics LG HDR WQHD 311NTKF7N885" mode 3440x1440@84.98Hz
+  output "eDP-1" disable
+}

@@ -3,6 +3,7 @@
 format = """
 [](surface0)\
 $os\
+${custom.devenv}\
 $username\
 [](bg:peach fg:surface0)\
 $directory\
@@ -164,7 +165,7 @@ format = '[[ $symbol( $version) ](fg:base bg:teal)]($style)'
 [python]
 symbol = ""
 style = "bg:teal"
-format = '[[ $symbol( $version) ](fg:base bg:teal)]($style)'
+format = '[[ $symbol( $version $virtualenv) ](fg:base bg:teal)]($style)'
 
 [docker_context]
 symbol = ""
@@ -176,6 +177,14 @@ disabled = false
 time_format = "%R"
 style = "bg:peach"
 format = '[[ 󱑒 $time ](fg:mantle bg:purple)]($style)'
+
+[custom.devenv]
+description = "Show active devenv.sh environment"
+command = "echo $name"
+when = ''' test -n "$DEVENV_PROFILE" '''
+style = "bg:surface0 fg:text"
+format = "[ $output ]($style)"
+
 
 [line_break]
 disabled = false

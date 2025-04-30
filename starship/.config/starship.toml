@@ -3,7 +3,6 @@
 format = """
 [](surface0)\
 $os\
-${custom.devenv}\
 $username\
 [](bg:peach fg:surface0)\
 $directory\
@@ -22,6 +21,7 @@ $haskell\
 $python\
 [](fg:teal bg:blue)\
 $docker_context\
+${custom.devenv}\
 [](fg:blue bg:purple)\
 $time\
 [ ](fg:purple)\
@@ -180,9 +180,9 @@ format = '[[ 󱑒 $time ](fg:mantle bg:purple)]($style)'
 
 [custom.devenv]
 description = "Show active devenv.sh environment"
-command = "echo $name"
+command = "echo  $name"
 when = ''' test -n "$DEVENV_PROFILE" '''
-style = "bg:surface0 fg:text"
+style = "bg:blue fg:mantle"
 format = "[ $output ]($style)"
 
 

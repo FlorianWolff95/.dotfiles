@@ -21,7 +21,7 @@ $haskell\
 $python\
 [](fg:teal bg:blue)\
 $docker_context\
-${custom.devenv}\
+${custom.shell}\
 [](fg:blue bg:purple)\
 $time\
 [ ](fg:purple)\
@@ -178,10 +178,10 @@ time_format = "%R"
 style = "bg:peach"
 format = '[[ 󱑒 $time ](fg:mantle bg:purple)]($style)'
 
-[custom.devenv]
-description = "Show active devenv.sh environment"
+[custom.shell]
+description = "Show the current shell"
 command = "echo  $name"
-when = ''' test -n "$DEVENV_PROFILE" '''
+when = ''' test -n "$name" '''
 style = "bg:blue fg:mantle"
 format = "[ $output ]($style)"
 

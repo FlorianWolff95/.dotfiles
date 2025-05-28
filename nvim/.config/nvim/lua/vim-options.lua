@@ -10,3 +10,6 @@ vim.opt.undofile = true
 
 vim.wo.number = true
 vim.opt.scrolloff = 8
+
+vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+vim.diagnostic.config({ virtual_text = true })

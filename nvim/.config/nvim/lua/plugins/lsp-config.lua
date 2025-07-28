@@ -31,10 +31,6 @@ return {
       lspconfig.ruff.setup({
         capabilities = capabilities,
       })
-      lspconfig.pyright.setup({
-        capabilities = capabilities,
-        filetypes = { "python" },
-      })
       lspconfig.rnix.setup({
         capabilities = capabilities,
       })

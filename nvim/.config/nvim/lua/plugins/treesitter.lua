@@ -5,8 +5,13 @@ return {
     lazy = false,
     branch = "main",
     config = function()
-      require('nvim-treesitter').setup()
-      local ensure_installed = {
+      -- Basic setup (optional, uses defaults if not called)
+      require('nvim-treesitter').setup({
+        install_dir = vim.fn.stdpath('data') .. '/site'
+      })
+
+      -- Install parsers for your languages
+      local languages = {
         "bash",
         "c",
         "cpp",
@@ -24,7 +29,16 @@ return {
         "vim",
       }
 
-      require('nvim-treesitter').install(ensure_installed)
-    end
+      -- Install the parsers
+      require('nvim-treesitter').install(languages)
+
+      -- Enable highlighting only for languages in our local languages list
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = languages,
+        callback = function()
+          vim.treesitter.start()
+        end,
+      })
+    end,
   }
 }

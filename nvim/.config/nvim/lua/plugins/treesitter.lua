@@ -5,12 +5,11 @@ return {
     lazy = false,
     branch = "main",
     config = function()
-      -- Basic setup (optional, uses defaults if not called)
       require('nvim-treesitter').setup({
         install_dir = vim.fn.stdpath('data') .. '/site'
       })
 
-      -- Install parsers for your languages
+      -- Parsers to install. These are *parser* names.
       local languages = {
         "bash",
         "c",
@@ -26,17 +25,51 @@ return {
         "python",
         "rust",
         "typescript",
+        "tsx",
         "vim",
+        "elixir",
+        "eex",
+        "heex",
+        "surface",
+        "nix",
       }
 
-      -- Install the parsers
       require('nvim-treesitter').install(languages)
 
-      -- Enable highlighting only for languages in our local languages list
+      -- Filetypes to start highlighting for. These are *filetype* names, which
+      -- do not always match the parser name (bash -> sh, eex -> eelixir, ...).
+      local filetypes = {
+        "sh",
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "go",
+        "gomod",
+        "dockerfile",
+        "html",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "lua",
+        "markdown",
+        "python",
+        "rust",
+        "typescript",
+        "typescriptreact",
+        "vim",
+        "elixir",
+        "eelixir",
+        "heex",
+        "surface",
+        "nix",
+      }
+
       vim.api.nvim_create_autocmd('FileType', {
-        pattern = languages,
+        pattern = filetypes,
         callback = function()
-          vim.treesitter.start()
+          -- install() is async, so the parser may not exist yet on a fresh setup.
+          pcall(vim.treesitter.start)
         end,
       })
     end,

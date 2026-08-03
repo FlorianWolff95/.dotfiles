@@ -11,6 +11,14 @@ vim.opt.undofile = true
 vim.wo.number = true
 vim.opt.scrolloff = 8
 
-vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+-- Inlay hints are enabled per-buffer on LspAttach, see lua/plugins/lsp-config.lua
 vim.diagnostic.config({ virtual_text = true })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+
+-- Neovim already maps .exs/.eex/.leex/.heex/.sface. Only .ex needs an override,
+-- since Neovim disambiguates it between Elixir, Euphoria and TeX.
+vim.filetype.add({
+  extension = {
+    ex = "elixir",
+  }
+})

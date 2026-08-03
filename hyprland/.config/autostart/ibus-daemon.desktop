@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=IBus
+# Shadows /etc/xdg/autostart/ibus-daemon.desktop. That entry sets
+# NotShowIn=GNOME;KDE, so under Hyprland the XDG autostart generator *does*
+# start ibus. Hidden=true makes systemd-xdg-autostart-generator emit no unit at
+# all. Hyprland's input.kb_layout handles the German layout, so ibus is unused.
+Hidden=true

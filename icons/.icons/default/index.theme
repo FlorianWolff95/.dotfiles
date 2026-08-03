@@ -1,0 +1,6 @@
+[Icon Theme]
+# Toolkit-wide default cursor, so XWayland apps and any future X11/i3 session
+# agree with what hyprland.lua sets via XCURSOR_THEME.
+Name=Default
+Comment=Default cursor theme
+Inherits=Adwaita

@@ -1,0 +1,20 @@
+[Unit]
+Description=Synology Drive client
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+# The `synology-drive` wrapper backgrounds the real launcher with `&` and then
+# exits immediately, so it is neither Type=simple (systemd would tear the cgroup
+# down at once) nor reliably Type=forking (systemd cannot guess a main PID and
+# kills everything). oneshot + RemainAfterExit leaves the launched tree alone
+# and keeps the unit active.
+Type=oneshot
+RemainAfterExit=yes
+# `autostart` is just `sleep 10; start` -- a hand-rolled wait for the session.
+# systemd already orders us after graphical-session.target, so skip the sleep.
+ExecStart=/usr/bin/env synology-drive start
+ExecStop=/usr/bin/env synology-drive stop
+
+[Install]
+WantedBy=graphical-session.target

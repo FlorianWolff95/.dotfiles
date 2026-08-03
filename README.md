@@ -18,14 +18,27 @@ To use the dotfiles in this repository, you can utilize `stow`. Follow these ste
 3. Use `stow` to create symbolic links for the desired configuration:
    ```bash
    stow hyprland
+   stow icons
    stow kanshi
    stow kitty
    stow nvim
    stow starship
    stow yazi
+   stow --no-folding systemd
    ```
 
 This will create symbolic links in your home directory for the respective configurations.
+
+`systemd` uses `--no-folding` so that `~/.config/systemd/user` stays a real
+directory. Without it stow replaces the whole directory with one symlink into
+this repo, and anything that later runs `systemctl --user enable` would write
+into the repo.
+
+The `systemd` package autostarts the session daemons (waybar, hyprpaper,
+hypridle, kanshi, udiskie, maestral, synology-drive). The units are enabled by
+`graphical-session.target.wants/` symlinks committed alongside them, so
+`stow` both installs and enables them — no `systemctl --user enable` needed.
+swaync is deliberately absent: it is D-Bus activated on demand.
 
 ## Required Programs
 

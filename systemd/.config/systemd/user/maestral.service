@@ -1,0 +1,15 @@
+[Unit]
+Description=Maestral Dropbox sync daemon
+Documentation=https://maestral.app/
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+# -f keeps it in the foreground so systemd can supervise it; plain `maestral
+# start` daemonises and returns.
+ExecStart=/usr/bin/env maestral start -f
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

@@ -38,13 +38,17 @@ local menu        = "wofi --show drun"
 -------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
--- swaync is deliberately absent: NixOS ships a swaync.service user unit which
--- starts it under systemd. Starting it here too made the unit fail with
--- "An instance of SwayNotificationCenter is already running!".
+--
+-- Only the workspace-silent launches live here, because they need Hyprland's
+-- exec-with-rules path to land on a given workspace.
+--
+-- The background daemons (waybar, hyprpaper, hypridle, kanshi, udiskie,
+-- maestral, synology-drive) are systemd user units instead -- see the `systemd`
+-- stow package. This event fires ~1s BEFORE graphical-session.target is active,
+-- which killed waybar/udiskie/maestral/synology-drive outright and left
+-- hyprpaper running with no outputs, so no wallpaper. swaync needs nothing: it
+-- is Type=dbus and activates on demand.
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar & hypridle & hyprpaper & udiskie & kanshi")
-    hl.exec_cmd("maestral start & synology-drive autostart")
-
     hl.exec_cmd(terminal,      { workspace = "1 silent" })
     hl.exec_cmd("firefox",     { workspace = "2 silent" })
     hl.exec_cmd("thunderbird", { workspace = "3 silent" })
@@ -57,8 +61,11 @@ end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
+-- Without an explicit theme Hyprland falls back to its own branded hyprcursor.
+-- Adwaita is the only cursor theme installed and it is an XCursor theme, not a
+-- hyprcursor one, so hyprcursor is turned off below rather than pointed at it.
+hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
 
 
 -----------------------
@@ -112,6 +119,12 @@ hl.config({
 
     animations = {
         enabled = true,
+    },
+
+    cursor = {
+        -- No hyprcursor theme is installed, so use XCURSOR_THEME (Adwaita)
+        -- instead of Hyprland's built-in branded cursor.
+        enable_hyprcursor = false,
     },
 })
 
